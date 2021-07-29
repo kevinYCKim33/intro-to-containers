@@ -1,9 +1,4 @@
-# Alpine Linux: Just the Barebones amount 
-# 900mb => 5mb
-# good for security
-# i.e.
-# you're protected from python attack cause you don't have python
-FROM node:12-stretch
+FROM node:12-alpine
 
 USER node
 
@@ -40,5 +35,5 @@ COPY --chown=node:node . .
 CMD ["node", "index.js"]
 # docker build -t my-node-app .
 # docker inspect my-node-app
-# my size is: 921453505 => 921.45 MB
+# my size is: 92644519 => 92.64 MB
 # node stretch/debian much larger than node alpine
