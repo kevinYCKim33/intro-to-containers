@@ -4,13 +4,27 @@ USER node
 
 WORKDIR /home/node/code
 
-# copy everything in this directoy into home/node/code
-COPY --chown=node:node . .
+# Docker is smart
+# if the moment it senses a change
+# it will do everything below manually
+# so let's say you changed index.js but didn't change any of your packages
+# docker will first compare that these are the exact same...
+COPY --chown=node:node package-lock.json package.json ./
+
+# if these two files are different...then and only then will it run npm ci
 
 # npm ci: will adhere to what's in package-lock.json
 # recommended over npm install
 # a best practice
 RUN npm ci
+
+# now this will run if only index.js changed
+# we save doing an npm install this way...
+
+# I guess the term for that is layering.
+# copy everything in this directoy into home/node/code
+COPY --chown=node:node . .
+
 
 # some people use for documentation
 # or you could just do publish
