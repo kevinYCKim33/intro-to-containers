@@ -1,4 +1,13 @@
-FROM node:12-alpine
+# instead of node:12-alpine
+# to make smaller for the sake of it
+FROM alpine:3.10
+
+# not android Alpine Package Manager
+# 
+RUN apk add --update nodejs npm
+
+# add a user called node; again alpine:node already does this
+RUN addgroup -S node && adduser -S node -G node
 
 USER node
 
