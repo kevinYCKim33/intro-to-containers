@@ -1,3 +1,5 @@
+# VOLUMES
+# https://btholt.github.io/complete-intro-to-containers/volumes
 FROM node:12-alpine
 COPY --chown=node:node . /src
 WORKDIR /src
