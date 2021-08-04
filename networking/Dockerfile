@@ -3,7 +3,7 @@
 # good for security
 # i.e.
 # you're protected from python attack cause you don't have python
-FROM node:12-stretch
+FROM node:12-alpine
 
 USER node
 
@@ -21,7 +21,7 @@ COPY --chown=node:node package-lock.json package.json ./
 # npm ci: will adhere to what's in package-lock.json
 # recommended over npm install
 # a best practice
-RUN npm ci
+RUN npm install
 
 # now this will run if only index.js changed
 # we save doing an npm install this way...

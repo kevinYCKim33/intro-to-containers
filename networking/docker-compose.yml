@@ -1,0 +1,31 @@
+# 3 is the latest one; 2 is still functioning/maintained
+version: "3"
+# all the services that Docker compose will spin up for us
+services:
+  # make a web container
+  web:
+    build: . # there's a Dockerfile right in this directory
+    ports: # the ports I care about
+      - "3000:3000" # bullet list of ports I want to expose
+      # expose 3000 on 3000
+    volumes: # how to connect our code to this
+      - .:/home/node/code # our code exists at here (.), and we'll mount our code onto this (/home/node/code)
+      - /home/node/code/node_modules # treat this separately; aka don't bring this in; needs to be installed inside of container
+    links: # these two containers need to talk to each other
+      - db # my other container; I'll start this when db container spins up
+    environment: # my environment variables??
+      MONGO_CONNECTION_STRING: mongodb://db:27017
+  # make a db container
+  db:
+    # the image you want to learn
+    # smart enough to get from docker hub and do its own thing
+    image: mongo:3
+  # follow this pattern for other microservices
+
+# cd into this directory then do 
+# docker-compose up
+# basically in rails talk
+# instead of doing tab 1: rails s
+# tab 2: bundle exec sidekiq
+# tab 3: redis start
+# you just did docker-compose up and it solved a bunch of issues
