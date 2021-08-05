@@ -3,7 +3,10 @@
 # good for security
 # i.e.
 # you're protected from python attack cause you don't have python
-FROM node:12-alpine
+FROM node:12-stretch
+
+# basically a file watcher every time there's a file change reloads
+RUN npm i -g nodemon 
 
 USER node
 
@@ -21,7 +24,7 @@ COPY --chown=node:node package-lock.json package.json ./
 # npm ci: will adhere to what's in package-lock.json
 # recommended over npm install
 # a best practice
-RUN npm install
+RUN npm ci
 
 # now this will run if only index.js changed
 # we save doing an npm install this way...
@@ -37,7 +40,9 @@ COPY --chown=node:node . .
 # https://btholt.github.io/complete-intro-to-containers/expose
 # EXPOSE 3000
 
-CMD ["node", "index.js"]
+# CMD ["node", "index.js"]
+# better version
+CMD ["nodemon", "index.js"]
 # docker build -t my-node-app .
 # docker inspect my-node-app
 # my size is: 921453505 => 921.45 MB
